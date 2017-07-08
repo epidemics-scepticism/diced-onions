@@ -45,10 +45,7 @@ func worker(die chan bool, tid int) {
 			case <-die:
 				return
 			default:
-				k, e := gen.GenerateKey(p, q, i)
-				if e != nil {
-					continue
-				}
+				k := gen.GenerateKey(p, q, i)
 				m.Lock()
 				c++
 				m.Unlock()
