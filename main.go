@@ -1,51 +1,51 @@
 /*
-    Copyright (C) 2016 cacahuatl < cacahuatl at autistici dot org >
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   Copyright (C) 2016 cacahuatl < cacahuatl at autistici dot org >
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 package main
 
 import (
+	"crypto/rand"
+	"flag"
 	"github.com/epidemics-scepticism/diced-onions/gen"
 	"github.com/epidemics-scepticism/diced-onions/onion"
 	"github.com/epidemics-scepticism/diced-onions/save"
 	"github.com/epidemics-scepticism/diced-onions/search"
-	"flag"
 	"log"
 	"os"
 	"os/signal"
 	"runtime"
 	"sync"
 	"time"
-	"crypto/rand"
 )
 
 func worker(die chan bool, tid int) {
 	defer log.Print("thread ", tid, " stopping")
 	defer w.Done()
 	for {
-		p,e := rand.Prime(rand.Reader, 512)
+		p, e := rand.Prime(rand.Reader, 512)
 		if e != nil {
 			continue
 		}
-		q,e := rand.Prime(rand.Reader, 512)
+		q, e := rand.Prime(rand.Reader, 512)
 		if e != nil {
 			continue
 		}
-		for i := 3; i < 1<<31-1; i+=2 {
+		for i := 3; i < 1<<31-1; i += 2 {
 			select {
 			case <-die:
 				return
 			default:
-				k,e := gen.GenerateKey(p, q, i)
+				k, e := gen.GenerateKey(p, q, i)
 				if e != nil {
 					continue
 				}
@@ -61,7 +61,6 @@ func worker(die chan bool, tid int) {
 		}
 	}
 }
-
 
 var match *search.Search
 
