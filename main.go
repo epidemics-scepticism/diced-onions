@@ -86,7 +86,10 @@ func main() {
 	s := make(chan os.Signal, 1)
 	signal.Notify(s, os.Interrupt, os.Kill)
 	match = search.NewSearch()
-	match.Populate(*wordlist)
+	if e := match.Populate(*wordlist); e != nil {
+		log.Print("error populating wordlist ", e)
+		return
+	}
 	for i := 0; i < *workers; i++ {
 		log.Print("thread ", i+1, " starting")
 		w.Add(1)

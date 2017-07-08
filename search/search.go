@@ -71,6 +71,9 @@ func (s *Search) Populate(filename string) error {
 		words++
 	}
 	log.Print("added ", words, " words")
+	if words < 1 {
+		return errors.New("empty word list ", filename)
+	}
 	return nil
 }
 
