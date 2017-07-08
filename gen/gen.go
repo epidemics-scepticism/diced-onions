@@ -43,6 +43,5 @@ func GenerateKey(p *big.Int, q *big.Int, exp int) *rsa.PrivateKey {
 	}
 	priv.N = n
 	priv.Primes = primes
-	priv.Precompute()
 	return priv
 }
