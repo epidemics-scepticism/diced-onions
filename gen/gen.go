@@ -20,7 +20,7 @@ import (
 
 var bigOne = big.NewInt(1)
 
-func GenerateKey(p *big.Int, q *big.Int, exp int) (*rsa.PrivateKey, error) {
+func GenerateKey(p *big.Int, q *big.Int, exp int) *rsa.PrivateKey {
 	priv := new(rsa.PrivateKey)
 	priv.E = exp
 	n := new(big.Int).Set(bigOne)
@@ -44,5 +44,5 @@ func GenerateKey(p *big.Int, q *big.Int, exp int) (*rsa.PrivateKey, error) {
 	priv.N = n
 	priv.Primes = primes
 	priv.Precompute()
-	return priv, priv.Validate()
+	return priv
 }

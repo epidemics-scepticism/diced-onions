@@ -53,7 +53,7 @@ func worker(die chan bool, tid int) {
 				c++
 				m.Unlock()
 				o := onion.Hash(k)
-				if match.Search(o, full) {
+				if match.Search(o, full) && k.Validate() == nil {
 					log.Print("match: ", o, ".onion")
 					save.SaveKey(k, o)
 				}
