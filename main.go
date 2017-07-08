@@ -87,7 +87,7 @@ func main() {
 	signal.Notify(s, os.Interrupt, os.Kill)
 	match = search.NewSearch()
 	if e := match.Populate(*wordlist); e != nil {
-		log.Print("error populating wordlist ", e)
+		log.Print("error: ", e)
 		return
 	}
 	for i := 0; i < *workers; i++ {
